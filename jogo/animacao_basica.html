@@ -1,0 +1,49 @@
+<html>
+    <body>
+        <canvas id="folha" width="600" height="500"></canvas> <!-- o canva cria a folha de fundo-->
+
+        <script>
+
+            window.onload = function(){
+                setInterval(executar, 1000 / 30);
+            } // atraso de 30ms para conseguir exergar o deslocamento da bola
+
+            var posicaoBolaX = posicaoBolaY = 10;
+
+            function executar(){
+                // todo o código do jogo
+
+            // criando o campo
+            var folhaDesenho = document.getElementById("folha");
+            var areaDesenho = folhaDesenho.getContext("2d"); //  essas 2 linhas foi criado o objeto de desenho
+            
+            // definição das variávies
+            var larguraCampo = 600;
+            var alturaCampo = 500;
+            var espessuraRede = 5;
+            
+            
+            var diametroBola = 10;
+
+            // criação do campo
+            areaDesenho.fillStyle = "#286047"; // cor do campo
+
+            areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); // desenhando o retangulo do campo
+
+            // cor branca para area de trabalho, para poder desenhar os componentes em cima dela
+            areaDesenho.fillStyle = "#ffffff";
+
+                areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo);
+
+                // desenha a bola
+                areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola );
+
+                posicaoBolaX = posicaoBolaX + 1;
+                posicaoBolaY = posicaoBolaY + 1;
+
+                console.log("tic-tac");
+                
+        }
+        </script>
+    </body>
+</html>
