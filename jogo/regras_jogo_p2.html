@@ -1,21 +1,17 @@
 <!-- 1 - Ao bater nas laterais do campo a bola deverá ser rebatida no sentido oposto
 2 -  Ao bater na raquete a bola deverá ser rebatibatida no sentido oposto
 3 - Ao cruzar a linha do adversário (sem rebater na raquete) deverá somar 1 ponto e iniciar a bola no meio do campo.-->
-
 <html> 
     <body>
         <canvas id="folha" width="600" height="500"></canvas> <!--elemento html que permite iniciar primitivas de desenho-->
-
     <script>
-            window.onload = function(){
-                setInterval(executar, 1000 / 30);
+        window.onload = function(){
+            setInterval(executar, 1000 / 30);
             } // executa o código do jogo em 30 quadros por segundo dando o movimento ao jogo
-
 
             var posicaoJogador1 = posicaoJogador2 = 40;
 
             var posicaoBolaX = posicaoBolaY = 10;
-
             var velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 5;
           
             var pontuacaoJogador1 = pontuacaoJogador2 = 0;
@@ -43,14 +39,13 @@
             areaDesenho.fillStyle = "#286047"; // cor do campo verde
 
             areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); // desenhando o retangulo verde do campo
-
-            
+          
             areaDesenho.fillStyle = "#ffffff"; // cor branca para desenhar as linhas do campo, bolinha e raquetes
 
             areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo); // desenho das linhas do campo
 
                 // desenho da bola
-            areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola );
+            areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
 
                 // raquetes
             areaDesenho.fillRect(0, posicaoJogador1, espessuraRaquete, alturaRaquete);
@@ -62,19 +57,22 @@
 
                 // verifica lateral superior
             if(posicaoBolaY < 0 && velocidadeBolaPosicaoY < 0) {
-                velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY; // a bola subia em numeros positivos, ao bater na lateral ela começa a descer em velocidade com numeros negativos, imaginemos que como a largura com campo é 500, ela saindo da linha inferior ele incia 0,1,2,3...500 ao chegar em 500 ela bate na linha, a regra é que ao bater ela segue na direção contrária, então adicionei ao cógico - velocidadeBolaPosicaoY, ou seja, ao bater agora ela desceria ex: -500, -499, -498...-1,0 esse é o racional.
-                }
+                velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;
+            } // a bola subia em numeros positivos, ao bater na lateral ela começa a descer em velocidade com numeros negativos, imaginemos que como a largura com campo é 500, ela saindo da linha inferior ele incia 0,1,2,3...500 ao chegar em 500 ela bate na linha, a regra é que ao bater ela segue na direção contrária, então adicionei ao cógico - velocidadeBolaPosicaoY, ou seja, ao bater agora ela desceria ex: -500, -499, -498...-1,0 esse é o racional.
+               
 
                 // verifica lateral inferior
                 if(posicaoBolaY > alturaCampo && velocidadeBolaPosicaoY > 0){
-                    velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY; // se a posição da bola for maior que altura do campo ela inverte novamente, ou seja, se a bola descia em uma contagem regressiva, ao tocar na lateral inferior agora ela retorna subindo em contagem positiva
-                }
+                    velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;
+                } // se a posição da bola for maior que altura do campo ela inverte novamente, ou seja, se a bola descia em uma contagem regressiva, ao tocar na lateral inferior agora ela retorna subindo em contagem positiva
+               
 
                 // verifica se o jogador 2 fez 1 ponto
-
                 if(posicaoBolaX < 0) {
-                    if(posicaoBolaY > posicaoJogador1 &&  posicaoBolaY < posicaoJogador1 + alturaRaquete);
-                // rebater a bola
+                    if(posicaoBolaY > posicaoJogador1 &&  posicaoBolaY < posicaoJogador1 + alturaRaquete) {
+                        
+                    }
+                
                   velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
 
                 var diferencaY = posicaoBolaY - (posicaoJogador1 + alturaRaquete / 2);
