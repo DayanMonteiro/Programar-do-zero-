@@ -21,7 +21,7 @@
             var espessuraRaquete = 11;
             var alturaRaquete = 100;
             var efeitoRaquete = 0.3;
-            var velocidadeJogador2 = 5;
+            var velocidadeJogador2 = 6;
             var posicaoJogador1 = posicaoJogador2 = 40;
             var posicaoBolaX = posicaoBolaY = 10;
             var velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 5;
@@ -73,9 +73,10 @@
                     // pontos do jogador 2
                     pontuacaoJogador2 = pontuacaoJogador2 + 1;
                     //colocar a bola no centro
-                        
-
-
+                    posicaoBolaX = larguraCampo / 2;
+                    posicaoBolaY = alturaCampo / 2;
+                    velocidadeBolaPosicaoX = - velocidadeBolaPosicaoX;
+                    velocidadeBolaPosicaoY = 3;
                     }
                 }
 
@@ -93,6 +94,10 @@
                 // pontos jogador 1
                 pontuacaoJogador1 = pontuacaoJogador1 + 1; // soma + 1 a pontuação atual do jogador 1
                 //colocar a bola no centro
+                posicaoBolaX = larguraCampo / 2;
+                posicaoBolaY = alturaCampo / 2;
+                velocidadeBolaPosicaoX = - velocidadeBolaPosicaoX;
+                velocidadeBolaPosicaoY = 3;
                }
             }  
             // atualiza a posição do jogador 2
