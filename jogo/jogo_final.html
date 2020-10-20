@@ -1,0 +1,124 @@
+<!-- 1 - Ao bater nas laterais do campo a bola deverá ser rebatida no sentido oposto
+2 -  Ao bater na raquete a bola deverá ser rebatibatida no sentido oposto
+3 - Ao cruzar a linha do adversário (sem rebater na raquete) deverá somar 1 ponto e iniciar a bola no meio do campo.-->
+<html> 
+    <body>
+        <canvas id="folha" width="600" height="500"></canvas> <!--elemento html que permite iniciar primitivas de desenho-->
+    <script>
+        // carrega os primeiros comandos
+        window.onload = function() {
+            iniciar(); // inicia o jogo (comandos e variáveis)
+            setInterval(principal, 1000 / 30);
+            } // executa o código do jogo dentro do lanço em 30 quadros por segundo dando o movimento ao jogo
+
+            
+           function iniciar() {
+            // definição das variávies
+                folhaDesenho = document.getElementById("folha");
+                areaDesenho = folhaDesenho.getContext("2d"); //  essas 2 linhas foi criado o objeto de desenho
+      
+                larguraCampo = 600;
+                alturaCampo = 500;
+                espessuraRede = 5;
+                diametroBola = 10;
+                espessuraRaquete = 11;
+                alturaRaquete = 100;
+                efeitoRaquete = 0.3;
+                velocidadeJogador2 = 6;
+                posicaoJogador1 = posicaoJogador2 = 40;
+                posicaoBolaX = posicaoBolaY = 10;
+                velocidadeBolaPosicaoX = velocidadeBolaPosicaoY = 5;
+                pontuacaoJogador1 = pontuacaoJogador2 = 0;
+
+                folhaDesenho.addEventListener('mousemove', function(e){
+                    posicaoJogador1 = e.clientY - alturaRaquete / 2;
+            });
+            }
+
+            function principal () {
+                desenhar();
+                calcular();
+            }
+
+            function desenhar() { // criação do campo
+            areaDesenho.fillStyle = "#286047"; // cor do campo verde
+            areaDesenho.fillRect(0, 0, larguraCampo, alturaCampo); // desenhando o retangulo verde do campo          
+            areaDesenho.fillStyle = "#ffffff"; // cor branca para desenhar as linhas do campo, bolinha e raquetes
+            areaDesenho.fillRect(larguraCampo / 2 - espessuraRede / 2, 0, espessuraRede, alturaCampo); // desenho das linhas do campo
+                // desenho da bola
+            areaDesenho.fillRect(posicaoBolaX - diametroBola / 2, posicaoBolaY - diametroBola / 2, diametroBola, diametroBola);
+                // raquetes
+            areaDesenho.fillRect(0, posicaoJogador1, espessuraRaquete, alturaRaquete);
+            areaDesenho.fillRect(larguraCampo - espessuraRaquete, posicaoJogador2, espessuraRaquete, alturaRaquete);
+            // escrever pontuação do jogo
+            areaDesenho.fillText("Humano - " + pontuacaoJogador1 + "pontos", 100, 100);
+            areaDesenho.fillText("Computador - " + pontuacaoJogador2 + "pontos", larguraCampo - 200, 100);
+            }
+
+            // todo o código do jogo
+            function calcular(){ 
+            // incremento da posição da bola nos eixos X e Y do campo
+            posicaoBolaX = posicaoBolaX + velocidadeBolaPosicaoX;
+            posicaoBolaY = posicaoBolaY + velocidadeBolaPosicaoY;
+              // verifica lateral superior
+            if(posicaoBolaY < 0 && velocidadeBolaPosicaoY < 0) {
+                velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;
+            } // a bola subia em numeros positivos, ao bater na lateral ela começa a descer em velocidade com numeros negativos, imaginemos que como a largura com campo é 500, ela saindo da linha inferior ele incia 0,1,2,3...500 ao chegar em 500 ela bate na linha, a regra é que ao bater ela segue na direção contrária, então adicionei ao cógico - velocidadeBolaPosicaoY, ou seja, ao bater agora ela desceria ex: -500, -499, -498...-1,0 esse é o racional.
+            
+                // verifica lateral inferior
+                if(posicaoBolaY > alturaCampo && velocidadeBolaPosicaoY > 0){
+                    velocidadeBolaPosicaoY = -velocidadeBolaPosicaoY;
+                } // se a posição da bola for maior que altura do campo ela inverte novamente, ou seja, se a bola descia em uma contagem regressiva, ao tocar na lateral inferior agora ela retorna subindo em contagem positiva
+               
+                // verifica se o jogador 2 fez ponto
+                if(posicaoBolaX < 0) {
+                    if(posicaoBolaY > posicaoJogador1 &&  posicaoBolaY < posicaoJogador1 + alturaRaquete) {
+                    // rebater a bola
+                    velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
+
+                    var diferencaY = posicaoBolaY - (posicaoJogador1 + alturaRaquete / 2);
+                    velocidadeBolaPosicaoY = diferencaY * efeitoRaquete;
+                    } else {
+                    // pontos do jogador 2
+                    pontuacaoJogador2 = pontuacaoJogador2 + 1;
+                    // colocar a bola no centro
+                    continuar();              
+                    }
+                }
+
+                // verifica se o jogador 1 fez ponto
+                if(posicaoBolaX > larguraCampo) { // se a posição for maior quer dizer que ela atravessou o campo, ou seja foi ponto
+               if(posicaoBolaY > posicaoJogador2 && posicaoBolaY < posicaoJogador2 + alturaRaquete){ // se a bola estiver mais alta que a altura da posição do jogador 2 ou se a posição da bola estiver mais baixa que a posição da altura da raquete
+                //o jogador 2 precisa rebater a bola parada sofrer ponto do adversário
+                // rebater a bola
+                velocidadeBolaPosicaoX = -velocidadeBolaPosicaoX;
+               
+                // pontos do jogador 1
+                var diferencaY = posicaoBolaY - (posicaoJogador2 + alturaRaquete / 2); // ou seja se a bola pegar no centro da raquete não tem efeito nenhum por isso divide por 2, ou seja a bola sairá em linha reta
+                velocidadeBolaPosicaoY = diferencaY * efeitoRaquete;
+                 } else {
+                // pontos jogador 1
+                pontuacaoJogador1 = pontuacaoJogador1 + 1; // soma + 1 a pontuação atual do jogador 1
+                //colocar a bola no centro
+                continuar();
+               }
+            }  
+            // atualiza a posição do jogador 2
+            if( posicaoJogador2 +alturaRaquete / 2 < posicaoBolaY) {
+                posicaoJogador2 = posicaoJogador2 + velocidadeJogador2;
+            } else {
+                posicaoJogador2 = posicaoJogador2 - velocidadeJogador2;
+            }
+        }            
+   
+            function continuar() {
+        //colocar a bola no centro
+                posicaoBolaX = larguraCampo / 2;
+                    posicaoBolaY = alturaCampo / 2;
+                    velocidadeBolaPosicaoX = - velocidadeBolaPosicaoX;
+                    velocidadeBolaPosicaoY = 3;
+            }
+    </script>
+    </body>
+</html>
+
