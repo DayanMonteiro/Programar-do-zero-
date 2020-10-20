@@ -2,7 +2,19 @@
 2 -  Ao bater na raquete a bola deverá ser rebatibatida no sentido oposto
 3 - Ao cruzar a linha do adversário (sem rebater na raquete) deverá somar 1 ponto e iniciar a bola no meio do campo.-->
 <html> 
+    <head>
+        <style>
+            #center {
+                display:flex;
+                justify-content: center;
+                align-content: center;
+            }
+        </style>
+    </head>
     <body>
+
+        <div id="center">
+
         <canvas id="folha" width="600" height="500"></canvas> <!--elemento html que permite iniciar primitivas de desenho-->
     <script>
         // carrega os primeiros comandos
@@ -119,6 +131,8 @@
                     velocidadeBolaPosicaoY = 3;
             }
     </script>
+
+    </div>
     </body>
 </html>
 
